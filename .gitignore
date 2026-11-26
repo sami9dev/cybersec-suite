@@ -1,0 +1,7 @@
+.env
+reports/
+*.log
+*.bak
+docker-ssl/
+.state/
+node_modules/

@@ -1,0 +1,18 @@
+services:
+  zap-web:
+    image: zaproxy/zap-stable:latest
+    container_name: zap-web
+    ports:
+      - "8080:8080"
+      - "8090:8090"
+    command: zap-webswing.sh
+    restart: unless-stopped
+
+  zap-scan:
+    image: zaproxy/zap-stable:latest
+    container_name: zap-scanner
+    profiles:
+      - scan
+    command: zap-baseline.py -t ${TARGET_URL:-http://host.docker.internal:3000} -r zap-report.html -I
+    volumes:
+      - ./reports:/zap/wrk/:rw

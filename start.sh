@@ -36,12 +36,14 @@ while true; do
     echo "  [3] Run ZAP Target Scan     (Headless DAST baseline audit)"
     echo "  [4] Launch SafeLine WAF     (Intelligent Web Application Firewall)"
     echo "  [5] Run 0security Scanner   (Static SAST Sentinels & CVE Checker)"
-    echo "  [6] Start Everything        (PentAGI + ZAP + SafeLine)"
-    echo "  [7] Stop All Services       (docker compose down across all tools)"
-    echo "  [8] Exit"
+    echo "  [6] Launch REA              (Reverse Engineer Anything - Binaries & WebMCP)"
+    echo "  [7] Security Audit Guide    (6-Phase Adversarial Security Audit Skill)"
+    echo "  [8] Start Everything        (PentAGI + ZAP + SafeLine)"
+    echo "  [9] Stop All Services       (docker compose down across all tools)"
+    echo "  [0] Exit"
     echo ""
     echo "================================================================"
-    read -p "Enter your choice (1-8): " CHOICE
+    read -p "Enter your choice (0-9): " CHOICE
 
     case $CHOICE in
         1)
@@ -98,6 +100,32 @@ while true; do
             read -p "Press Enter to return to menu..."
             ;;
         6)
+            echo ""
+            echo "[*] Launching REA..."
+            cd tools/rea
+            npm run build 2>/dev/null || true
+            npm start
+            cd ../..
+            read -p "Press Enter to return to menu..."
+            ;;
+        7)
+            clear
+            echo "================================================================"
+            echo "             6-PHASE SECURITY AUDIT METHODOLOGY"
+            echo "================================================================"
+            echo ""
+            echo "  Phase 1: Surface Reconnaissance (Endpoints, routes, APIs, CSP)"
+            echo "  Phase 2: Static Analysis SAST   (SQLi, SSRF, IDOR, Auth bypass)"
+            echo "  Phase 3: Dynamic Fuzzing DAST   (ZAP, Parameter Tampering)"
+            echo "  Phase 4: Secret & Env Audit     (Leaked tokens, credentials, JWKs)"
+            echo "  Phase 5: Business Logic Flaws   (Rate limits, privilege escalation)"
+            echo "  Phase 6: Verification Gate      (Zero-false-positive repro proof)"
+            echo ""
+            echo "Full instructions located at: tools/security-audit/skills/security-audit/SKILL.md"
+            echo "================================================================"
+            read -p "Press Enter to return to menu..."
+            ;;
+        8)
             CHECK_DOCKER
             CHECK_ENV
             echo ""
@@ -117,7 +145,7 @@ while true; do
             echo "- SafeLine:  https://localhost:9443"
             read -p "Press Enter to return to menu..."
             ;;
-        7)
+        9)
             CHECK_DOCKER
             echo ""
             echo "[*] Stopping all security services..."
@@ -128,11 +156,11 @@ while true; do
             echo "[OK] All security services stopped."
             read -p "Press Enter to return to menu..."
             ;;
-        8)
+        0)
             exit 0
             ;;
         *)
-            echo "Invalid choice. Please select 1-8."
+            echo "Invalid choice. Please select 0-9."
             sleep 1
             ;;
     esac

@@ -13,23 +13,27 @@ echo   [2] Launch OWASP ZAP Web UI (DAST Security Scanner - Port 8080)
 echo   [3] Run ZAP Target Scan     (Headless DAST baseline audit)
 echo   [4] Launch SafeLine WAF     (Intelligent Web Application Firewall)
 echo   [5] Run 0security Scanner   (Static SAST Sentinels & CVE Checker)
-echo   [6] Start Everything        (PentAGI + ZAP + SafeLine)
-echo   [7] Stop All Services       (docker compose down across all tools)
-echo   [8] Exit
+echo   [6] Launch REA              (Reverse Engineer Anything - Binaries & WebMCP)
+echo   [7] Security Audit Guide    (6-Phase Adversarial Security Audit Skill)
+echo   [8] Start Everything        (PentAGI + ZAP + SafeLine)
+echo   [9] Stop All Services       (docker compose down across all tools)
+echo   [0] Exit
 echo.
 echo ================================================================
-set /p CHOICE="Enter your choice (1-8): "
+set /p CHOICE="Enter your choice (0-9): "
 
 if "%CHOICE%"=="1" goto PENTAGI
 if "%CHOICE%"=="2" goto ZAP_WEB
 if "%CHOICE%"=="3" goto ZAP_SCAN
 if "%CHOICE%"=="4" goto SAFELINE
 if "%CHOICE%"=="5" goto ZEROSEC
-if "%CHOICE%"=="6" goto START_ALL
-if "%CHOICE%"=="7" goto STOP_ALL
-if "%CHOICE%"=="8" exit /b 0
+if "%CHOICE%"=="6" goto REA_TOOL
+if "%CHOICE%"=="7" goto SEC_AUDIT
+if "%CHOICE%"=="8" goto START_ALL
+if "%CHOICE%"=="9" goto STOP_ALL
+if "%CHOICE%"=="0" exit /b 0
 
-echo Invalid choice. Please select 1-8.
+echo Invalid choice. Please select 0-9.
 timeout /t 2 >nul
 goto MENU
 
@@ -117,9 +121,38 @@ goto MENU
 :ZEROSEC
 echo.
 echo [*] Running 0security SAST scanner...
+if not exist reports mkdir reports
 npx -y 0security scan . --output reports\0security-report.md
 echo.
 echo [OK] SAST scan complete. Report saved to reports\0security-report.md
+pause
+goto MENU
+
+:REA_TOOL
+echo.
+echo [*] Launching REA (Reverse Engineer Anything)...
+cd tools\rea
+npm run build >nul 2>&1
+npm start
+cd ..\..
+pause
+goto MENU
+
+:SEC_AUDIT
+cls
+echo ================================================================
+echo             6-PHASE SECURITY AUDIT METHODOLOGY
+echo ================================================================
+echo.
+echo  Phase 1: Surface Reconnaissance (Endpoints, routes, APIs, CSP)
+echo  Phase 2: Static Analysis SAST   (SQLi, SSRF, IDOR, Auth bypass)
+echo  Phase 3: Dynamic Fuzzing DAST   (ZAP, Parameter Tampering)
+echo  Phase 4: Secret & Env Audit     (Leaked tokens, credentials, JWKs)
+echo  Phase 5: Business Logic Flaws   (Rate limits, privilege escalation)
+echo  Phase 6: Verification Gate      (Zero-false-positive repro proof)
+echo.
+echo Full instructions located at: tools\security-audit\skills\security-audit\SKILL.md
+echo ================================================================
 pause
 goto MENU
 

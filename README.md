@@ -13,6 +13,8 @@ A unified, modular, 1-command deployment and scanning suite combining premier op
 | **0security** | Static SAST Sentinels | CLI / Markdown Reports | 6 adversarial sentinels scanning source code for CVEs, injection, secrets, and SSRF flaws. |
 | **SafeLine WAF** | Defense & Protection | `https://localhost:9443` | High-performance open-source Web Application Firewall with AI semantic analysis. |
 | **Shannon** | Exploit Hunter | CLI / Automated Agent | Autonomous agent designed to discover zero-days and verify vulnerabilities. |
+| **REA** | Reverse Engineering | CLI / WebMCP / API | Reverse Engineer Anything: Native binaries, managed runtimes (.NET/Java), Electron, and firmware. |
+| **Security Audit Skill** | Methodology & Rules | `SKILL.md` / Checklist | Production 6-Phase security audit framework used by top security teams. |
 
 ---
 
@@ -47,7 +49,7 @@ chmod +x start.sh && ./start.sh
 
 ## 🖥️ Interactive Master Menu
 
-When you launch `start.bat` or `start.sh`, you are presented with an interactive menu:
+When you launch `start.bat` or `start.sh`, you get an interactive menu:
 
 ```text
 ================================================================
@@ -59,9 +61,11 @@ When you launch `start.bat` or `start.sh`, you are presented with an interactive
   [3] Run ZAP Target Scan     (Headless DAST baseline audit)
   [4] Launch SafeLine WAF     (Intelligent Web Application Firewall)
   [5] Run 0security Scanner   (Static SAST Sentinels & CVE Checker)
-  [6] Start Everything        (PentAGI + ZAP + SafeLine)
-  [7] Stop All Services       (docker compose down across all tools)
-  [8] Exit
+  [6] Launch REA              (Reverse Engineer Anything - Binaries & WebMCP)
+  [7] Security Audit Guide    (6-Phase Adversarial Security Audit Skill)
+  [8] Start Everything        (PentAGI + ZAP + SafeLine)
+  [9] Stop All Services       (docker compose down across all tools)
+  [0] Exit
 ================================================================
 ```
 

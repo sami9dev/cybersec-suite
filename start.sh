@@ -40,10 +40,13 @@ while true; do
     echo "  [7] Security Audit Guide    (6-Phase Adversarial Security Audit Skill)"
     echo "  [8] Start Everything        (PentAGI + ZAP + SafeLine)"
     echo "  [9] Stop All Services       (docker compose down across all tools)"
+    echo ""
+    echo "  [H] Health Check Status     (Probe running ports & containers)"
+    echo "  [U] Update & Pull Images    (Pull latest Docker security images)"
     echo "  [0] Exit"
     echo ""
     echo "================================================================"
-    read -p "Enter your choice (0-9): " CHOICE
+    read -p "Enter your choice: " CHOICE
 
     case $CHOICE in
         1)
@@ -156,11 +159,27 @@ while true; do
             echo "[OK] All security services stopped."
             read -p "Press Enter to return to menu..."
             ;;
+        [hH])
+            bash scripts/health-check.sh
+            read -p "Press Enter to return to menu..."
+            ;;
+        [uU])
+            CHECK_DOCKER
+            echo ""
+            echo "[*] Pulling latest security images..."
+            docker pull vxcontrol/pentagi:latest
+            docker pull vxcontrol/scraper:latest
+            docker pull vxcontrol/pgvector:latest
+            docker pull zaproxy/zap-stable:latest
+            echo ""
+            echo "[OK] All images updated!"
+            read -p "Press Enter to return to menu..."
+            ;;
         0)
             exit 0
             ;;
         *)
-            echo "Invalid choice. Please select 0-9."
+            echo "Invalid choice. Please select from the menu."
             sleep 1
             ;;
     esac

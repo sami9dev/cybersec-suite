@@ -1,0 +1,43 @@
+name: CI - Compose & Syntax Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-compose:
+    name: Validate Docker Compose Configs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate PentAGI Compose
+        run: |
+          cd tools/pentagi
+          cp ../../.env.example .env
+          docker compose config --quiet
+
+      - name: Validate OWASP ZAP Compose
+        run: |
+          cd tools/zap
+          docker compose config --quiet
+
+      - name: Validate Shannon Compose
+        run: |
+          cd tools/shannon
+          cp ../../.env.example .env
+          docker compose config --quiet
+
+  validate-scripts:
+    name: Validate Shell Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Shell Scripts Syntax
+        run: |
+          bash -n start.sh

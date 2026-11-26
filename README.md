@@ -2,6 +2,8 @@
 
 A unified, modular, 1-command deployment and scanning suite combining premier open-source cybersecurity tools into a single workflow.
 
+![CI](https://github.com/sami9dev/cybersec-suite/actions/workflows/ci.yml/badge.svg)
+
 ---
 
 ## 🧰 Included Tools
@@ -49,7 +51,7 @@ chmod +x start.sh && ./start.sh
 
 ## 🖥️ Interactive Master Menu
 
-When you launch `start.bat` or `start.sh`, you get an interactive menu:
+When you launch `start.bat` or `start.sh`, you get an interactive control dashboard:
 
 ```text
 ================================================================
@@ -65,6 +67,9 @@ When you launch `start.bat` or `start.sh`, you get an interactive menu:
   [7] Security Audit Guide    (6-Phase Adversarial Security Audit Skill)
   [8] Start Everything        (PentAGI + ZAP + SafeLine)
   [9] Stop All Services       (docker compose down across all tools)
+
+  [H] Health Check Status     (Probe running ports & containers)
+  [U] Update & Pull Images    (Pull latest Docker security images)
   [0] Exit
 ================================================================
 ```
@@ -82,7 +87,7 @@ TARGET_URL=https://your-website.com
 
 ---
 
-## 📊 Reports Directory
+## 📊 Reports & Artifacts
 
 All automated scans (ZAP baseline, 0security audit, exploit verifications) generate clean HTML / Markdown reports inside the `reports/` folder:
 * `reports/zap-report.html` — Dynamic vulnerabilities, missing security headers, cookie flags.

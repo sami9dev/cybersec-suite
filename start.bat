@@ -17,23 +17,28 @@ echo   [6] Launch REA              (Reverse Engineer Anything - Binaries & WebMC
 echo   [7] Security Audit Guide    (6-Phase Adversarial Security Audit Skill)
 echo   [8] Start Everything        (PentAGI + ZAP + SafeLine)
 echo   [9] Stop All Services       (docker compose down across all tools)
+echo.
+echo   [H] Health Check Status     (Probe running ports & containers)
+echo   [U] Update & Pull Images    (Pull latest Docker security images)
 echo   [0] Exit
 echo.
 echo ================================================================
-set /p CHOICE="Enter your choice (0-9): "
+set /p CHOICE="Enter your choice: "
 
-if "%CHOICE%"=="1" goto PENTAGI
-if "%CHOICE%"=="2" goto ZAP_WEB
-if "%CHOICE%"=="3" goto ZAP_SCAN
-if "%CHOICE%"=="4" goto SAFELINE
-if "%CHOICE%"=="5" goto ZEROSEC
-if "%CHOICE%"=="6" goto REA_TOOL
-if "%CHOICE%"=="7" goto SEC_AUDIT
-if "%CHOICE%"=="8" goto START_ALL
-if "%CHOICE%"=="9" goto STOP_ALL
-if "%CHOICE%"=="0" exit /b 0
+if /i "%CHOICE%"=="1" goto PENTAGI
+if /i "%CHOICE%"=="2" goto ZAP_WEB
+if /i "%CHOICE%"=="3" goto ZAP_SCAN
+if /i "%CHOICE%"=="4" goto SAFELINE
+if /i "%CHOICE%"=="5" goto ZEROSEC
+if /i "%CHOICE%"=="6" goto REA_TOOL
+if /i "%CHOICE%"=="7" goto SEC_AUDIT
+if /i "%CHOICE%"=="8" goto START_ALL
+if /i "%CHOICE%"=="9" goto STOP_ALL
+if /i "%CHOICE%"=="H" goto HEALTH_CHECK
+if /i "%CHOICE%"=="U" goto UPDATE_IMAGES
+if /i "%CHOICE%"=="0" exit /b 0
 
-echo Invalid choice. Please select 0-9.
+echo Invalid choice. Please select from the menu.
 timeout /t 2 >nul
 goto MENU
 
@@ -153,6 +158,23 @@ echo  Phase 6: Verification Gate      (Zero-false-positive repro proof)
 echo.
 echo Full instructions located at: tools\security-audit\skills\security-audit\SKILL.md
 echo ================================================================
+pause
+goto MENU
+
+:HEALTH_CHECK
+call scripts\health-check.bat
+goto MENU
+
+:UPDATE_IMAGES
+call :CHECK_DOCKER
+echo.
+echo [*] Pulling latest security images from Docker Hub...
+docker pull vxcontrol/pentagi:latest
+docker pull vxcontrol/scraper:latest
+docker pull vxcontrol/pgvector:latest
+docker pull zaproxy/zap-stable:latest
+echo.
+echo [OK] All security images updated to latest versions!
 pause
 goto MENU
 
